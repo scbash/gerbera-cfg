@@ -42,10 +42,10 @@ function addAudio(obj) {
         desc = artist_orig;
     }
 
-	var display_artist = obj.aux['DisplayArtist'];
-	if (display_artist) {
-	    obj.meta[M_ARTIST] = display_artist;
-	}
+    var display_artist = obj.aux['DisplayArtist'];
+    if (display_artist) {
+        obj.meta[M_ARTIST] = display_artist;
+    }
     
     var album = obj.meta[M_ALBUM];
     if (!album) {
@@ -133,7 +133,7 @@ function addAudio(obj) {
     
     var artists = artist_orig.split(SEPARATOR);
     for (var i = 0; i < artists.length; i++) {
-		var a = artists[i];
+        var a = artists[i];
         chain = ['Audio', 'Artists', a, 'All Songs'];
         addCdsObject(obj, createContainerChain(chain));
     }
@@ -153,14 +153,14 @@ function addAudio(obj) {
     obj.title = temp + title;
     addCdsObject(obj, createContainerChain(chain));
     for (var i = 0; i < artists.length; i++) {
-	    var a = artists[i];
+        var a = artists[i];
         chain = ['Audio', 'Artists', a, 'All - full name'];
         addCdsObject(obj, createContainerChain(chain));
     }
 
     obj.title = track + title;
     for (var i = 0; i < artists.length; i++) {
-	    var a = artists[i];
+        var a = artists[i];
         chain = ['Audio', 'Artists', a, album];
         addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_ALBUM);
     }
@@ -172,7 +172,7 @@ function addAudio(obj) {
     // TODO I would prefer the Kodi model of Genre -> Instrumental -> Artist -> Album or Instrumental -> All Artists -> Album
     var genres = genre_orig.split(SEPARATOR);
     for (var i = 0; i < genres.length; i++) {
-		var g = genres[i];
+        var g = genres[i];
         chain = ['Audio', 'Genres', g];
         addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_GENRE);
     }
