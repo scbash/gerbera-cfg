@@ -25,7 +25,7 @@ function addAudio(obj) {
     var artist_full;
     var album_full;
     
-    const SEPARATOR = ';';
+    const SEPARATOR = /\s*(?:;|$)\s*/
 
     // first gather data
     var title = obj.meta[M_TITLE];
