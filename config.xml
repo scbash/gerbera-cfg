@@ -63,6 +63,13 @@
       <directory location="/root" mode="inotify" level="full" recursive="yes" hidden-files="no"/>
     </autoscan>
 -->
+    <library-options>
+      <id3>
+        <auxdata>
+          <add-data tag="DisplayArtist"/>
+        </auxdata>
+      </id3>
+    </library-options>
     <scripting script-charset="UTF-8">
       <!-- these should eventually point to /gerbera/config -->
       <common-script>/gerbera/config/common.js</common-script>

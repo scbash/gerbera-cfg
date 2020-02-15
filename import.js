@@ -41,6 +41,11 @@ function addAudio(obj) {
         artist_full = artist_orig;
         desc = artist_orig;
     }
+
+	var display_artist = obj.aux['DisplayArtist'];
+	if (display_artist) {
+	    obj.meta[M_ARTIST] = display_artist;
+	}
     
     var album = obj.meta[M_ALBUM];
     if (!album) {
