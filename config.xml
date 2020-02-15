@@ -136,33 +136,17 @@
     <mimetype-profile-mappings>
       <transcode mimetype="video/x-flv" using="vlcmpeg"/>
       <transcode mimetype="application/ogg" using="vlcmpeg"/>
-      <transcode mimetype="audio/ogg" using="ogg2mp3"/>
-      <transcode mimetype="audio/flac" using="ogg2mp3"/>
-      <transcode mimetype="audio/x-flac" using="ogg2mp3"/>
+      <transcode mimetype="audio/ogg" using="audio2flac"/>
+      <transcode mimetype="audio/flac" using="audio2flac"/>
+      <transcode mimetype="audio/x-flac" using="audio2flac"/>
     </mimetype-profile-mappings>
     <profiles>
-      <profile name="flac2raw" enabled="no" type="external">
-        <mimetype>audio/L16</mimetype>
+      <profile name="audio2flac" enabled="yes" type="external">
+        <mimetype>audio/x-flac</mimetype>
         <accept-url>no</accept-url>
         <first-resource>yes</first-resource>
         <accept-ogg-theora>no</accept-ogg-theora>
-	<agent command="flac" arguments="-d --silent --force-raw-format --little-endian --signed %in > %out"/>
-        <buffer size="1048576" chunk-size="131072" fill-size="262144"/>
-      </profile>
-      <profile name="flac2wav" enabled="no" type="external">
-        <mimetype>audio/x-wav</mimetype>
-        <accept-url>no</accept-url>
-        <first-resource>yes</first-resource>
-        <accept-ogg-theora>no</accept-ogg-theora>
-	<agent command="flac" arguments="-d --silent -c %in > %out"/>
-        <buffer size="1048576" chunk-size="131072" fill-size="262144"/>
-      </profile>
-      <profile name="ogg2mp3" enabled="yes" type="external">
-        <mimetype>audio/mpeg</mimetype>
-        <accept-url>no</accept-url>
-        <first-resource>yes</first-resource>
-        <accept-ogg-theora>no</accept-ogg-theora>
-        <agent command="ffmpeg" arguments="-y -i %in -f mp3 %out"/>
+        <agent command="ffmpeg" arguments="-y -i %in -compression_level 0 -f flac %out"/>
         <buffer size="1048576" chunk-size="131072" fill-size="262144"/>
       </profile>
       <profile name="vlcmpeg" enabled="no" type="external">
