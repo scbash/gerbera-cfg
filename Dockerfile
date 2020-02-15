@@ -4,11 +4,12 @@ FROM scb/gerbera:1.4.0-416fix
 # Synology uses somewhat complicated ACLs for shares, so I created a Synology user,
 # granted them read-only access to the media, and then use that same UID for Gerbera server.
 # Override this when building the container: docker build --build-arg user_id=xxxx ...
-# Build args are *not* working for me -- I had to insert the default below to get anything to work
 ARG user_id=1029
 
 # Create user to run server
 # Note this assumes the users group exists (which it does in Gerbera's current base image, ubuntu:18.04)
+# Note 2: build args don't work correcly for Synology's Docker 18.09.8 build 2c0a67b,
+#         so specify the default _again_.
 RUN useradd -r -u "${user_id:-1029}" -g users gerbera
 
 # Add transcoding tools
