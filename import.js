@@ -25,19 +25,21 @@ function addAudio(obj) {
     var artist_full;
     var album_full;
     
+    const SEPARATOR = ';';
+
     // first gather data
     var title = obj.meta[M_TITLE];
     if (!title) {
         title = obj.title;
     }
     
-    var artist = obj.meta[M_ARTIST];
-    if (!artist) {
-        artist = 'Unknown';
+    var artist_orig = obj.meta[M_ARTIST];
+    if (!artist_orig) {
+        artist_orig = 'Unknown';
         artist_full = null;
     } else {
-        artist_full = artist;
-        desc = artist;
+        artist_full = artist_orig;
+        desc = artist_orig;
     }
     
     var album = obj.meta[M_ALBUM];
@@ -63,11 +65,11 @@ function addAudio(obj) {
         desc = desc + ', ' + date;
     }
     
-    var genre = obj.meta[M_GENRE];
-    if (!genre) {
-        genre = 'Unknown';
+    var genre_orig = obj.meta[M_GENRE];
+    if (!genre_orig) {
+        genre_orig = 'Unknown';
     } else {
-        desc = desc + ', ' + genre;
+        desc = desc + ', ' + genre_orig;
     }
     
     var description = obj.meta[M_DESCRIPTION];
@@ -124,8 +126,12 @@ function addAudio(obj) {
     obj.title = title;
     addCdsObject(obj, createContainerChain(chain));
     
-    chain = ['Audio', 'Artists', artist, 'All Songs'];
-    addCdsObject(obj, createContainerChain(chain));
+    var artists = artist_orig.split(SEPARATOR);
+    for (var i = 0; i < artists.length; i++) {
+		var a = artists[i];
+        chain = ['Audio', 'Artists', a, 'All Songs'];
+        addCdsObject(obj, createContainerChain(chain));
+    }
     
     chain = ['Audio', 'All - full name'];
     var temp = '';
@@ -141,20 +147,30 @@ function addAudio(obj) {
    
     obj.title = temp + title;
     addCdsObject(obj, createContainerChain(chain));
-    
-    chain = ['Audio', 'Artists', artist, 'All - full name'];
-    addCdsObject(obj, createContainerChain(chain));
-    
-    chain = ['Audio', 'Artists', artist, album];
+    for (var i = 0; i < artists.length; i++) {
+	    var a = artists[i];
+        chain = ['Audio', 'Artists', a, 'All - full name'];
+        addCdsObject(obj, createContainerChain(chain));
+    }
+
     obj.title = track + title;
-    addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_ALBUM);
+    for (var i = 0; i < artists.length; i++) {
+	    var a = artists[i];
+        chain = ['Audio', 'Artists', a, album];
+        addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_ALBUM);
+    }
     
     chain = ['Audio', 'Albums', album];
     obj.title = track + title; 
     addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_ALBUM);
     
-    chain = ['Audio', 'Genres', genre];
-    addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_GENRE);
+    // TODO I would prefer the Kodi model of Genre -> Instrumental -> Artist -> Album or Instrumental -> All Artists -> Album
+    var genres = genre_orig.split(SEPARATOR);
+    for (var i = 0; i < genres.length; i++) {
+		var g = genres[i];
+        chain = ['Audio', 'Genres', g];
+        addCdsObject(obj, createContainerChain(chain), UPNP_CLASS_CONTAINER_MUSIC_GENRE);
+    }
     
     chain = ['Audio', 'Year', date];
     addCdsObject(obj, createContainerChain(chain));
