@@ -1,4 +1,4 @@
-FROM scb/gerbera:1.4.0-416fix
+FROM scb/gerbera:1.4.0-806676ab
 
 # Specify user ID to run as
 # Synology uses somewhat complicated ACLs for shares, so I created a Synology user,
